@@ -1,69 +1,70 @@
-;(function(window, Error) {
+(function (window, Error) {
 
   if (Error.captureStackTrace) return;
 
   function CallSite(struct) {
-    var self = this;
-
+    this.__struct = struct;
     this.func = struct['function'];
+  }
 
-    this.getThis = function getThis() {
-      return self;
-    };
+  CallSite.prototype = {
+    getThis: function CallSiteGetThis() {
+      return this;
+    },
 
-    this.getTypeName = function getTypeName() {
+    getTypeName: function CallSiteGetTypeName() {
       //
-    };
+    },
 
-    this.getFunction = function getFunction() {
+    getFunction: function CallSiteGetFunction() {
       return this.func;
-    };
+    },
 
-    this.getFunctionName = function getFunctionName() {
-      return struct.functionName;
-    };
+    getFunctionName: function CallSiteGetFunctionName() {
+      return this.__struct.functionName;
+    },
 
-    this.getMethodName = function getMethodName() {
-      return struct.methodName;
-    };
+    getMethodName: function CallSiteGetMethodName() {
+      return this.__struct.methodName;
+    },
 
-    this.getFileName = function getFileName() {
-      return struct.fileName;
-    };
+    getFileName: function CallSiteGetFileName() {
+      return this.__struct.fileName;
+    },
 
-    this.getLineNumber = function getLineNumber() {
-      return struct.lineNumber > 0 ? struct.lineNumber : null;
-    };
+    getLineNumber: function CallSiteGetLineNumber() {
+      return this.__struct.lineNumber > 0 ? this.__struct.lineNumber : null;
+    },
 
-    this.getColumnNumber = function getColumnNumber() {
-      return struct.columnNumber > 0 ? struct.columnNumber : null;
-    };
+    getColumnNumber: function CallSiteGetColumnNumber() {
+      return this.__struct.columnNumber > 0 ? this.__struct.columnNumber : null;
+    },
 
-    this.getEvalOrigin = function getEvalOrigin() {
+    getEvalOrigin: function CallSiteGetEvalOrigin() {
       //
-    };
+    },
 
-    this.isTopLevel = function isTopLevel() {
+    isTopLevel: function CallSiteIsTopLevel() {
       //
-    };
+    },
 
-    this.isEval = function isEval() {
+    isEval: function CallSiteIsEval() {
+      return false;
+    },
+
+    isNative: function CallSiteIsNative() {
       //
-    };
+    },
 
-    this.isNative = function isNative() {
+    isConstructor: function CallSiteIsConstructor() {
       //
-    };
+    },
 
-    this.isConstructor = function isConstructor() {
-      //
-    };
+    getArguments: function CallSiteGetArguments() {
+      return this.fun && this.fun['arguments'] || null;
+    },
 
-    this.getArguments = function getArguments() {
-      return this.fun && this.fun.arguments || null;
-    };
-
-    this.toString = function toString() {
+    toString: function CallSiteToString() {
       var location = [this.getFileName()];
       if (this.getLineNumber()) {
         location.push(this.getLineNumber());
@@ -71,13 +72,12 @@
           location.push(this.getColumnNumber());
         }
       }
-      if (struct.functionName) {
-        return struct.functionName + ' (' + location.join(':') + ')';
+      if (this.getFunctionName()) {
+        return this.getFunctionName() + ' (' + location.join(':') + ')';
       }
-
       return location.join(':');
-    };
-  }
+    }
+  };
 
   function callSiteFactory(error) {
     var factory,
@@ -100,22 +100,22 @@
 
   var FireFox_re = /^([^@]*)@(.*?):(\d+)(?::(\d+))?$/;
 
-  function makeFireFoxCallSite(line, func) {
+  function makeFireFoxCallSite(error, line, func) {
     var match = line.match(FireFox_re);
     return {
       functionName: match[1],
       fileName: match[2] || '',
       lineNumber: ~~match[3] || 0,
-      columnNumber: ~~match[4] || 0,
+      columnNumber: ~~match[4] || error.columnNumber || 0,
       'function': func
     };
   }
 
-  function makeOperaCallSite(line) {
-    // derp
+  function makeOperaCallSite(error, line, func) {
+    return line;
   }
 
-  var function_re = /function\s*(.*?)\((.*?)\)/;
+  // var function_re = /function\s*(.*?)\((.*?)\)/;
 
   Error.captureStackTrace = function captureStackTrace(error, topLevel) {
     // Simultaneously traverse the frames in error.stack and the arguments.caller
@@ -127,7 +127,7 @@
     var frame;
     while (frame = nativeStack.shift()) {
       c = c.caller;
-      frames.push(new CallSite(factory.makeStruct(frame, c)));
+      frames.push(new CallSite(factory.makeStruct(error, frame, c)));
     }
 
     // Explicitly set back the error.name and error.message
@@ -163,5 +163,7 @@
     }
     return lines.join('\n');
   }
+
+  window.__CallSite__ = CallSite;
 
 })(this, Error);

@@ -1,0 +1,12 @@
+{
+    "browser": true,
+    "strict": false,
+    "boss": true,
+    "white": true,
+    "trailing": true,
+    "undef": true,
+    "predef": [
+
+    ],
+    "indent": 2
+}
