@@ -1,5 +1,7 @@
 ;(function(window, Error) {
 
+  if (Error.captureStackTrace) return;
+
   function CallSite(struct) {
     var self = this;
 
@@ -30,11 +32,11 @@
     };
 
     this.getLineNumber = function getLineNumber() {
-      return struct.lineNumber || 0;
+      return struct.lineNumber > 0 ? struct.lineNumber : null;
     };
 
     this.getColumnNumber = function getColumnNumber() {
-      return struct.columnNumber || 0;
+      return struct.columnNumber > 0 ? struct.columnNumber : null;
     };
 
     this.getEvalOrigin = function getEvalOrigin() {
@@ -58,12 +60,22 @@
     };
 
     this.getArguments = function getArguments() {
-      // lol, I'm going to add this
+      return this.fun && this.fun.arguments || null;
     };
 
     this.toString = function toString() {
-      var location = [struct.fileName, struct.lineNumber, struct.columnNumber].join(':');
-      return struct.functionName + ' (' + location + ')';
+      var location = [this.getFileName()];
+      if (this.getLineNumber()) {
+        location.push(this.getLineNumber());
+        if (this.getColumnNumber()) {
+          location.push(this.getColumnNumber());
+        }
+      }
+      if (struct.functionName) {
+        return struct.functionName + ' (' + location.join(':') + ')';
+      }
+
+      return location.join(':');
     };
   }
 
@@ -91,7 +103,7 @@
   function makeFireFoxCallSite(line, func) {
     var match = line.match(FireFox_re);
     return {
-      functionName: match[1] || '<anonymous>',
+      functionName: match[1],
       fileName: match[2] || '',
       lineNumber: ~~match[3] || 0,
       columnNumber: ~~match[4] || 0,
@@ -112,8 +124,10 @@
     var nativeStack = factory.stack.split('\n');
     var c = arguments.callee;
     var frames = [];
-    while (c = c.caller) {
-      frames.push(new CallSite(factory.makeStruct(nativeStack.shift(), c)));
+    var frame;
+    while (frame = nativeStack.shift()) {
+      c = c.caller;
+      frames.push(new CallSite(factory.makeStruct(frame, c)));
     }
 
     // Explicitly set back the error.name and error.message
