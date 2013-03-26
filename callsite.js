@@ -3,13 +3,14 @@
   if (Error.captureStackTrace) return;
 
   function CallSite(struct) {
-    this.__struct = struct;
+    this.receiver = window;  // I don't know when this is ever NOT window
     this.func = struct['function'];
+    this.__struct = struct;
   }
 
   CallSite.prototype = {
     getThis: function CallSiteGetThis() {
-      return this;
+      return this.receiver;
     },
 
     getTypeName: function CallSiteGetTypeName() {
