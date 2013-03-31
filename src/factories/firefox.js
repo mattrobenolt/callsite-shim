@@ -17,4 +17,10 @@ function FireFoxCallSiteFactory(error, fn) {
     }));
     fn = fn.caller;
   }
+
+  return {
+    name: error.name,
+    message: error.message,
+    frames: frames
+  };
 }

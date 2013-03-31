@@ -9,7 +9,7 @@
   Opera11CallSiteFactory:true
   */
 
-if (Error.captureStackTrace) return;
+// if (Error.captureStackTrace) return;
 
 function CallSite(struct) {
   this.receiver = window;  // I don't know when this is ever NOT window
@@ -125,7 +125,7 @@ Error.captureStackTrace = function captureStackTrace(error, topLevel) {
   // Simultaneously traverse the frames in error.stack and the arguments.caller
   // to build a list of CallSite objects
   var factory = CallSiteFactory(error),
-      frames = factory(error, arguments.caller);
+      frames = factory(error, arguments.callee);
 
   // Explicitly set back the error.name and error.message
   error.name = frames.name;
