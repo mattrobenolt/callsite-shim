@@ -9,8 +9,6 @@
   Opera11CallSiteFactory:true
   */
 
-// if (Error.captureStackTrace) return;
-
 function CallSite(struct) {
   this.receiver = window;  // I don't know when this is ever NOT window
   this.func = struct['function'];
@@ -121,7 +119,7 @@ function CallSiteFactory(error) {
 
 // var function_re = /function\s*(.*?)\((.*?)\)/;
 
-Error.captureStackTrace = function captureStackTrace(error, topLevel) {
+function captureStackTrace(error, topLevel) {
   // Simultaneously traverse the frames in error.stack and the arguments.caller
   // to build a list of CallSite objects
   var factory = CallSiteFactory(error),
@@ -136,7 +134,7 @@ Error.captureStackTrace = function captureStackTrace(error, topLevel) {
   // Pass the raw callsite objects through and get back a formatted stack trace
   var makeStack = Error.prepareStackTrace || defaultPrepareStackTrace;
   error.stack = makeStack(error_string, frames.frames);
-};
+}
 
 function defaultPrepareStackTrace(error_string, frames) {
   // Adapted from V8 source:

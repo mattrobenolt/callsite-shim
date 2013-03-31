@@ -1,6 +1,6 @@
 /* global CallSite:true */
 
-var FireFox_re = /^([^@]*)@(.*?):(\d+)(?::(\d+))?$/;
+var FireFox_re = /^([^@]*?)(?:\(.*?\))?@(.*?):(\d+)(?::(\d+))?$/;
 
 function FireFoxCallSiteFactory(error, fn) {
   var lines = error.stack.split('\n'),
@@ -15,7 +15,7 @@ function FireFoxCallSiteFactory(error, fn) {
       columnNumber: ~~match[4] || error.columnNumber || 0,
       'function': fn
     }));
-    fn = fn.caller;
+    fn = fn && fn.caller;
   }
 
   return {
