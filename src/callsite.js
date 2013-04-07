@@ -117,22 +117,23 @@ function CallSiteFactory(error) {
 }
 
 
-// var function_re = /function\s*(.*?)\((.*?)\)/;
+function makeErrorString(name, message) {
+  return name + ': ' + message;
+}
 
 function captureStackTrace(error, topLevel) {
   // Simultaneously traverse the frames in error.stack and the arguments.caller
   // to build a list of CallSite objects
   var factory = CallSiteFactory(error),
-      frames = factory(error, arguments.callee);
+      frames = factory(error, arguments.callee),
+      error_string = makeErrorString(frames.name, frames.message),
+      makeStack = Error.prepareStackTrace || defaultPrepareStackTrace;
 
   // Explicitly set back the error.name and error.message
   error.name = frames.name;
   error.message = frames.message;
 
-  var error_string = error.name + ': ' + error.message;
-
   // Pass the raw callsite objects through and get back a formatted stack trace
-  var makeStack = Error.prepareStackTrace || defaultPrepareStackTrace;
   error.stack = makeStack(error_string, frames.frames);
 }
 
