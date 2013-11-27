@@ -93,7 +93,53 @@ var FireFoxExceptions = {
         message: 'this.undef is not a function',
         frames: [
           {
-            functonName: 'lol'
+            functionName: '',
+            fileName: 'file:///home/user/js/stacktrace.js',
+            lineNumber: 44,
+            columnNumber: 0,
+            'function': undefined
+          },
+          {
+            functionName: '',
+            fileName: 'file:///home/user/js/stacktrace.js',
+            lineNumber: 31,
+            columnNumber: 0,
+            'function': undefined
+          },
+          {
+            functionName: 'printStackTrace',
+            fileName: 'file:///home/user/js/stacktrace.js',
+            lineNumber: 18,
+            columnNumber: 0,
+            'function': undefined
+          },
+          {
+            functionName: 'bar',
+            fileName: 'file:///home/user/js/test/functional/testcase1.html',
+            lineNumber: 13,
+            columnNumber: 0,
+            'function': undefined
+          },
+          {
+            functionName: 'bar',
+            fileName: 'file:///home/user/js/test/functional/testcase1.html',
+            lineNumber: 16,
+            columnNumber: 0,
+            'function': undefined
+          },
+          {
+            functionName: 'foo',
+            fileName: 'file:///home/user/js/test/functional/testcase1.html',
+            lineNumber: 20,
+            columnNumber: 0,
+            'function': undefined
+          },
+          {
+            functionName: '',
+            fileName: 'file:///home/user/js/test/functional/testcase1.html',
+            lineNumber: 24,
+            columnNumber: 0,
+            'function': undefined
           }
         ]
       }
