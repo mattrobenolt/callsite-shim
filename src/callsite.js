@@ -165,3 +165,7 @@ function defaultPrepareStackTrace(error_string, frames) {
   }
   return lines.join('\n');
 }
+
+if (isUndefined(Error.captureStackTrace)) {
+  Error.captureStackTrace = captureStackTrace;
+}
