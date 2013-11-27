@@ -87,7 +87,7 @@ CallSite.prototype = {
   }
 };
 
-function CallSiteFactory(error) {
+function makeCallSiteFactory(error) {
   if (error.stack && error.sourceURL) {
     return SafariCallSiteFactory;
   }
@@ -124,7 +124,7 @@ function makeErrorString(name, message) {
 function captureStackTrace(error, topLevel) {
   // Simultaneously traverse the frames in error.stack and the arguments.caller
   // to build a list of CallSite objects
-  var factory = CallSiteFactory(error),
+  var factory = makeCallSiteFactory(error),
       frames = factory(error, arguments.callee),
       error_string = makeErrorString(frames.name, frames.message),
       makeStack = Error.prepareStackTrace || defaultPrepareStackTrace;

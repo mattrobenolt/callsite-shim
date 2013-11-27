@@ -1,12 +1,7 @@
 {
-    "browser": true,
-    "strict": false,
-    "boss": true,
-    "white": true,
-    "trailing": true,
-    "undef": true,
-    "predef": [
-
-    ],
-    "indent": 2
+  "strict": false,
+  "globalstrict": false,
+  "browser": true,
+  "predef": [],
+  "indent": 2
 }

@@ -2,20 +2,20 @@
   "name": "callsite-shim",
   "version": "0.0.0",
   "scripts": {
-    "test": "make test"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/mattrobenolt/callsite-shim.git"
   },
   "devDependencies": {
-    "phantomjs": "*",
-    "jshint": "*",
-    "uglify-js": "git://github.com/mishoo/UglifyJS2.git",
-    "mocha": "*",
-    "chai": "*",
-    "mocha-phantomjs": "*",
-    "sinon": "*"
+    "chai": "~1.8.1",
+    "sinon": "~1.7.3",
+    "grunt": "~0.4.2",
+    "grunt-cli": "~0.1.11",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-mocha": "~0.4.6"
   },
   "private": true
 }
