@@ -228,7 +228,29 @@ var FireFoxExceptions = {
       expected: {
         name: undefined,
         message: 'x is null',
-        frames: []
+        frames: [
+          {
+            functionName: '',
+            fileName: 'file:///Users/eric/src/javascript-stacktrace/test/functional/ExceptionLab.html',
+            lineNumber: 48,
+            columnNumber: 0,
+            'function': undefined
+          },
+          {
+            functionName: 'dumpException3',
+            fileName: 'file:///Users/eric/src/javascript-stacktrace/test/functional/ExceptionLab.html',
+            lineNumber: 52,
+            columnNumber: 0,
+            'function': undefined
+          },
+          {
+            functionName: 'onclick',
+            fileName: 'file:///Users/eric/src/javascript-stacktrace/test/functional/ExceptionLab.html',
+            lineNumber: 1,
+            columnNumber: 0,
+            'function': undefined
+          }
+        ]
       }
     }
   };
