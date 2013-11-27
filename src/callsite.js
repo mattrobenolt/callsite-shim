@@ -116,8 +116,14 @@ function makeCallSiteFactory(error) {
   return OtherCallSiteFactory;
 }
 
+function isUndefined(what) {
+  return typeof what === 'undefined';
+}
 
 function makeErrorString(name, message) {
+  if (isUndefined(name) && isUndefined(message)) return '';
+  if (isUndefined(name)) return message;
+  if (isUndefined(message)) return name;
   return name + ': ' + message;
 }
 

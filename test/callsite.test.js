@@ -1,7 +1,12 @@
 /* global describe:true, it:true, assert:true */
 
-describe('derp', function () {
-  it('should work', function () {
-    assert.isTrue(true);
+describe('makeErrorString', function() {
+  it('should work', function() {
+    assert.equal(makeErrorString('x', 'y'), 'x: y');
+  });
+  it('should accept undefined', function() {
+    assert.equal(makeErrorString(undefined, 'y'), 'y');
+    assert.equal(makeErrorString('x', undefined), 'x');
+    assert.equal(makeErrorString(undefined, undefined), '');
   });
 });
