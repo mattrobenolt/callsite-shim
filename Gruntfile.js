@@ -18,7 +18,8 @@ module.exports = function(grunt) {
           },
           log: true,
           reporter: 'Spec',
-          run: true
+          run: true,
+          bail: true
         },
         src: ['test/index.html'],
         nonull: true
