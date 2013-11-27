@@ -161,7 +161,57 @@ var FireFoxExceptions = {
       expected: {
         name: undefined,
         message: undefined,
-        frames: []
+        frames: [
+          {
+            functionName: '',
+            fileName: 'file:///G:/js/stacktrace.js',
+            lineNumber: 44,
+            columnNumber: 0,
+            'function': undefined
+          },
+          {
+            functionName: '',
+            fileName: 'file:///G:/js/stacktrace.js',
+            lineNumber: 31,
+            columnNumber: 0,
+            'function': undefined
+          },
+          {
+            functionName: 'printStackTrace',
+            fileName: 'file:///G:/js/stacktrace.js',
+            lineNumber: 18,
+            columnNumber: 0,
+            'function': undefined
+          },
+          {
+            functionName: 'bar',
+            fileName: 'file:///G:/js/test/functional/testcase1.html',
+            lineNumber: 13,
+            columnNumber: 0,
+            'function': undefined
+          },
+          {
+            functionName: 'bar',
+            fileName: 'file:///G:/js/test/functional/testcase1.html',
+            lineNumber: 16,
+            columnNumber: 0,
+            'function': undefined
+          },
+          {
+            functionName: 'foo',
+            fileName: 'file:///G:/js/test/functional/testcase1.html',
+            lineNumber: 20,
+            columnNumber: 0,
+            'function': undefined
+          },
+          {
+            functionName: '',
+            fileName: 'file:///G:/js/test/functional/testcase1.html',
+            lineNumber: 24,
+            columnNumber: 0,
+            'function': undefined
+          }
+        ]
       }
     },
 
